@@ -38,6 +38,13 @@ var tasksToDoEl = document.querySelector("#tasks-to-do");
     type: taskTypeInput
     };
 
+    // check if input values are empty strings
+  if (!taskNameInput || !taskTypeInput) {
+  alert("You need to fill out the task form!");
+  return false;
+}
+  //This one line of code resets input fields after the task has been added
+  formEl.reset(); 
     // send it as an argument to createTaskEl
     createTaskEl(taskDataObj);
   }
@@ -69,5 +76,9 @@ var tasksToDoEl = document.querySelector("#tasks-to-do");
   /* 
   Additional notes
 
-  use console.dir to see the form's elements in the console
+  - use console.dir to see the form's elements in the console
+  - reset() is a "function feature" that ONLY WORKS IN <form> elements to auto 
+    reset the input fields after the last step in a function was executed.
+
+
   */
