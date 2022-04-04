@@ -1,84 +1,98 @@
-// // getting button id and creating a variable for it
-// var buttonEl = document.querySelector("#save-task");
-// var tasksToDoEl = document.querySelector("#tasks-to-do");
-
-// //creating a click event listener to the button variable to create an alert
-// buttonEl.addEventListener("click", function() {
-//   //create a list item element
-//   var listItemEl = document.createElement("li");
-//   //give this list item the class for styling
-//   listItemEl.className = "task-item";
-//   //give this list item a text content
-//   listItemEl.textContent = "This is a new task.";
-//   //append this list item to the parent refferenced by the variable "taskToDoEl" in this case, the Ul.
-//   tasksToDoEl.appendChild(listItemEl);
-//   });
-
-/* 
-4.2.6 Capture Form field Values 
-1. Target the HTML elements with the pertinent data.
-2. Read and store the content that those elements hold.
-3. Use that content to create a new task.
-*/
-
-  
-
+var taskIdCounter = 0;
 var formEl = document.querySelector("#task-form");
 var tasksToDoEl = document.querySelector("#tasks-to-do");
 
-  var taskFormHandler = function(event) {
-    event.preventDefault()
-    var taskNameInput = document.querySelector("input[name='task-name']").value;
-    var taskTypeInput = document.querySelector("select[name='task-type']").value;
-    
-    //package up data as an object
-     // package up data as an object
-    var taskDataObj = {
+var taskFormHandler = function(event) {
+  event.preventDefault();
+  var taskNameInput = document.querySelector("input[name='task-name'").value;
+  var taskTypeInput = document.querySelector("select[name='task-type']").value;
+
+  // check if inputs are empty (validate)
+  if (taskNameInput === "" || taskTypeInput === "") {
+    alert("You need to fill out the task form!");
+    return false;
+  }
+  
+  formEl.reset();
+
+  // reset form fields for next task to be entered
+  document.querySelector("input[name='task-name']").value = "";
+  document.querySelector("select[name='task-type']").selectedIndex = 0;
+
+  var taskDataObj = {
     name: taskNameInput,
     type: taskTypeInput
-    };
+  };
 
-    // check if input values are empty strings
-  if (!taskNameInput || !taskTypeInput) {
-  alert("You need to fill out the task form!");
-  return false;
+  createTaskEl(taskDataObj);
+};
+
+var createTaskEl = function(taskDataObj) {
+  var listItemEl = document.createElement("li");
+  listItemEl.className = "task-item";
+
+  // add task id as a custom attribute
+  listItemEl.setAttribute("data-task-id", taskIdCounter);
+
+  var taskInfoEl = document.createElement("div");
+  taskInfoEl.className = "task-info";
+  taskInfoEl.innerHTML = "<h3 class='task-name'>" + taskDataObj.name + "</h3><span class='task-type'>" + taskDataObj.type + "</span>";
+  listItemEl.appendChild(taskInfoEl);
+
+  var taskActionsEl = createTaskActions(taskIdCounter);
+  console.log(taskActionsEl);
+
+  tasksToDoEl.appendChild(listItemEl);
+
+  // increase task counter for next unique id
+  taskIdCounter++;
+};
+
+//task Id id is how we will pass different ids into the function each time 
+var createTaskActions = function(taskId) {
+// create new divs 
+var actionContainerEl = document.createElement("div");
+actionContainerEl.className = "task-actions";
+
+// create edit button
+var editButtonEl = document.createElement("button");
+editButtonEl.textContent = "Edit";
+editButtonEl.className = "btn edit-btn";
+editButtonEl.setAttribute("data-task-id", taskId);
+
+actionContainerEl.appendChild(editButtonEl);
+
+// create delete button
+var deleteButtonEl = document.createElement("button");
+deleteButtonEl.textContent = "Delete";
+deleteButtonEl.className = "btn delete-btn";
+deleteButtonEl.setAttribute("data-task-id", taskId);
+
+actionContainerEl.appendChild(deleteButtonEl);
+
+var statusSelectEl = document.createElement("select");
+statusSelectEl.className = "select-status";
+statusSelectEl.setAttribute("name", "status-change");
+statusSelectEl.setAttribute("data-task-id", taskId);
+
+actionContainerEl.appendChild(statusSelectEl);
+
+var statusChoices = ["To Do", "In Progress", "Completed"];
+
+for (var i = 0; i < statusChoices.length; i++) {
+  // create option element
+  var statusOptionEl = document.createElement("option");
+  statusOptionEl.textContent = statusChoices[i];
+  statusOptionEl.setAttribute("value", statusChoices[i]);
+
+  // append to select
+  statusSelectEl.appendChild(statusOptionEl);
 }
-  //This one line of code resets input fields after the task has been added
-  formEl.reset(); 
-    // send it as an argument to createTaskEl
-    createTaskEl(taskDataObj);
-  }
 
-  //creating the first new function
-  var createTaskEl = function(taskDataObj) {
-
-    // create list item
-    var listItemEl = document.createElement("li");
-    listItemEl.className = "task-item";
-    // create div to hold task info and add to list item
-    var taskInfoEl = document.createElement("div")
-    // give it a class name
-    taskInfoEl.className="task-info";
-    // add html to div
-    taskInfoEl.innerHTML = "<h3 class='task-name'>" + taskDataObj.name + "</h3><span class='task-type'>" + taskDataObj.type + "</span>";
-    listItemEl.appendChild(taskInfoEl);
-
-    // add entire list item to list
-    tasksToDoEl.appendChild(listItemEl);
-  }
+return actionContainerEl;
+};
 
 
+formEl.addEventListener("submit", taskFormHandler);
 
-  //creating a click event listener to the createTaskHandler function
-  formEl.addEventListener("submit", taskFormHandler);
-
-
-  /* 
-  Additional notes
-
-  - use console.dir to see the form's elements in the console
-  - reset() is a "function feature" that ONLY WORKS IN <form> elements to auto 
-    reset the input fields after the last step in a function was executed.
-
-
-  */
+// I'm in finding-taskID
