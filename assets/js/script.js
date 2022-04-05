@@ -65,8 +65,7 @@ var createTaskEl = function(taskDataObj) {
   // increase task counter for next unique id
   taskIdCounter++;
 
-  console.log(taskDataObj);
-  console.log(taskDataObj.status);
+  saveTasks()
 };
 
 //task Id id is how we will pass different ids into the function each time 
@@ -159,6 +158,8 @@ for (var i = 0; i < tasks.length; i++) {
 
 // reassign tasks array to be the same as updatedTaskArr
 tasks = updatedTaskArr;
+
+saveTasks()
 };
 
 //function c --> edeting a task
@@ -201,8 +202,8 @@ alert("Task Updated!");
 formEl.removeAttribute("data-task-id");
 document.querySelector("#save-task").textContent = "Add Task";
 
+saveTasks()
 };
-
 
 
 
@@ -232,11 +233,20 @@ for (var i = 0; i < tasks.length; i++) {
   if (tasks[i].id === parseInt(taskId)) {
     tasks[i].status = statusValue;
   }
-
-  console.log(tasks); 
 }
+
+saveTasks()
   
 };
 
+//function f --> When to save tasks 
+var saveTasks = function() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
 //adding a new event listener
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
+
+
+
+
