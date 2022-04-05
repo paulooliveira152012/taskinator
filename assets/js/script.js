@@ -1,13 +1,14 @@
 var taskIdCounter = 0;
+
 var formEl = document.querySelector("#task-form");
 var tasksToDoEl = document.querySelector("#tasks-to-do");
-var pageContentEl = document.querySelector("#page-content");
 var tasksInProgressEl = document.querySelector("#tasks-in-progress");
 var tasksCompletedEl = document.querySelector("#tasks-completed");
+var pageContentEl = document.querySelector("#page-content");
 
 var taskFormHandler = function(event) {
   event.preventDefault();
-  var taskNameInput = document.querySelector("input[name='task-name'").value;
+  var taskNameInput = document.querySelector("input[name='task-name']").value;
   var taskTypeInput = document.querySelector("select[name='task-type']").value;
 
   // check if inputs are empty (validate)
@@ -15,23 +16,26 @@ var taskFormHandler = function(event) {
     alert("You need to fill out the task form!");
     return false;
   }
-  
-  formEl.reset();
 
   // reset form fields for next task to be entered
   document.querySelector("input[name='task-name']").value = "";
   document.querySelector("select[name='task-type']").selectedIndex = 0;
 
+  // check if task is new or one being edited by seeing if it has a data-task-id attribute
+  var isEdit = formEl.hasAttribute("data-task-id");
+  
+
+// what's this?-----------------------------------------------------------------------------------------------
+  formEl.reset();
+
   var taskDataObj = {
     name: taskNameInput,
     type: taskTypeInput
   };
+// -----------------------------------------------------------------------------------------------
 
-  // createTaskEl(taskDataObj); it said replace
 
-  var isEdit = formEl.hasAttribute("data-task-id");
-
-  // PUT THIS BELOW `var isEdit = ...` in `taskFormHandler()`
+  
 
   // has data attribute, so get task id and call function to complete edit process
   if (isEdit) {
@@ -46,7 +50,6 @@ var taskFormHandler = function(event) {
   };
   createTaskEl(taskDataObj);
 }
-
 };
 
 var createTaskEl = function(taskDataObj) {
@@ -159,10 +162,12 @@ var taskType = taskSelected.querySelector("span.task-type").textContent;
 document.querySelector("select[name='task-type']").value = taskType;
 //including the task's id in edit mode
 formEl.setAttribute("data-task-id", taskId);
-};
 
 //Making it clear that the task is in edit mode
 document.querySelector("#save-task").textContent = "Save Task";
+};
+
+
 
 //function d --> finish edeting a task
 var completeEditTask = function(taskName, taskType, taskId) {
@@ -177,11 +182,11 @@ alert("Task Updated!");
 
 formEl.removeAttribute("data-task-id");
 document.querySelector("#save-task").textContent = "Add Task";
+
 };
 
 
 
-pageContentEl.addEventListener("change", taskStatusChangeHandler);
 
 //function e --> moving tasks between columns
 var taskStatusChangeHandler = function(event) {
@@ -203,4 +208,8 @@ var taskStatusChangeHandler = function(event) {
   else if (statusValue === "completed") {
     tasksCompletedEl.appendChild(taskSelected);
   }
+  
 };
+
+//adding a new event listener
+pageContentEl.addEventListener("change", taskStatusChangeHandler);
