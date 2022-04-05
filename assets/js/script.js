@@ -1,6 +1,8 @@
 var taskIdCounter = 0;
 var formEl = document.querySelector("#task-form");
 var tasksToDoEl = document.querySelector("#tasks-to-do");
+var pageContentEl = document.querySelector("#page-content");
+
 
 var taskFormHandler = function(event) {
   event.preventDefault();
@@ -95,4 +97,50 @@ return actionContainerEl;
 
 formEl.addEventListener("submit", taskFormHandler);
 
-// I'm in finding-taskID
+//function a --> targeting the element which has been triggered by an event
+var taskButtonHandler = function(event) { //the event object listens to the event itself(click) in the nested elements
+  // get target element from event
+  var targetEl = event.target;
+
+  // edit button was clicked
+  if (targetEl.matches(".edit-btn")) {
+    var taskId = targetEl.getAttribute("data-task-id");
+    editTask(taskId);
+  } 
+  // delete button was clicked
+  else if (targetEl.matches(".delete-btn")) {
+    var taskId = targetEl.getAttribute("data-task-id");
+    deleteTask(taskId);
+  }
+};
+
+
+
+//reference to function a
+pageContentEl.addEventListener("click", taskButtonHandler);
+
+
+//function b --> deletion of task (called in the taskButtonHandler function)
+var deleteTask = function(taskId) {
+  //selects the id of the element
+  var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
+  //delets the element
+  taskSelected.remove();
+};
+
+//function c --> edeting a task
+var editTask = function(taskId) {
+  // get task list item element
+var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
+// get content from task name and type
+var taskName = taskSelected.querySelector("h3.task-name").textContent;
+document.querySelector("input[name='task-name']").value = taskName;
+var taskType = taskSelected.querySelector("span.task-type").textContent;
+document.querySelector("select[name='task-type']").value = taskType;
+//including the task's id in edit mode
+formEl.setAttribute("data-task-id", taskId);
+};
+
+//Making it clear that the task is in edit mode
+document.querySelector("#save-task").textContent = "Save Task";
+
