@@ -183,7 +183,7 @@ document.querySelector("#save-task").textContent = "Add Task";
 
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
 
-//function e --> 
+//function e --> moving tasks between columns
 var taskStatusChangeHandler = function(event) {
   // get the task item's id
   var taskId = event.target.getAttribute("data-task-id");
