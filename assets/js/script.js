@@ -253,36 +253,41 @@ var saveTasks = function() {
 */
 
 //function g --> retrieve data from local storage
-var loadTasks = function() {
-  //transforming string values from local storage back to objects
-  var tasksArray = JSON.parse(localStorage.getItem('tasks')) || []
-  console.log(tasksArray)
+// var loadTasks = function() {
+//   console.log(tasksArray)
+
+
+//   for(var i = 0; i < tasksArray.length; i++) {
+  
+//   var task = document.createElement("li");
+
+//   task.className = "task-item";
+
+//   tasksArray.setAttribute("data-task-id", taskIdCounter)
 
   
-  var tasksArray = document.createElement("li");
   
-  tasksArray.className = "task-item";
-
-  tasksArray.setAttribute("data-task-id", taskIdCounter)
-
-  document.createElement("li")
-
-  for(var i = 0; i < tasksArray; i++) {
-    tasksArray.appendChild(taskInfoEl)
-  }
+//     tasksArray.appendChild()
+//   }
+  
   
 
-  // if (tasks === null) {
-  //   tasks.push(tasks[""])
-  //   return false; 
-  // } 
-  // tasks = JSON.parse(tasks);
-  // console.log()
-}
+  
+
+  
+  
+//   if (tasks === null) {
+//     tasksArray = []
+//     return false; 
+//   } 
+//   //transforming string values from local storage back to objects
+//   tasks = JSON.parse(tasks);
+//   console.log()
+// }
 
 
 
-loadTasks()
+// loadTasks()
 
 // for (i < taskButtonHandler.length )
 
