@@ -244,9 +244,54 @@ var saveTasks = function() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
+/* Pseudocode:
+- Gets task items from localStorage.
+- Converts tasks from the string format back into an array of objects.
+- Iterates through a tasks array and creates task elements on the page from it.
+*/
+
+//function g --> retrieve data from local storage
+var loadTasks = function() {
+  localStorage.getItem(tasks);
+  console.log(loadTasks)
+
+  if (tasks === null) {
+    tasks.push(tasks[""])
+    return false; 
+  } 
+  tasks = JSON.parse(tasks);
+  console.log()
+}
+
+// for (i < taskButtonHandler.length )
+
 //adding a new event listener
-pageContentEl.addEventListener("change", taskStatusChangeHandler);
 
 
+/*
+var createTaskEl = function(taskDataObj) {
+  var listItemEl = document.createElement("li");
+  listItemEl.className = "task-item";
 
+  // add task id as a custom attribute
+  listItemEl.setAttribute("data-task-id", taskIdCounter);
 
+  var taskInfoEl = document.createElement("div");
+  taskInfoEl.className = "task-info";
+  taskInfoEl.innerHTML = "<h3 class='task-name'>" + taskDataObj.name + "</h3><span class='task-type'>" + taskDataObj.type + "</span>";
+  listItemEl.appendChild(taskInfoEl);
+
+  var taskActionsEl = createTaskActions(taskIdCounter);
+  listItemEl.appendChild(taskActionsEl);
+  
+  tasksToDoEl.appendChild(listItemEl);
+
+  taskDataObj.id = taskIdCounter;
+  tasks.push(taskDataObj);
+
+  // increase task counter for next unique id
+  taskIdCounter++;
+
+  saveTasks()
+};
+*/
