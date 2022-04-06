@@ -6,6 +6,8 @@ var tasksInProgressEl = document.querySelector("#tasks-in-progress");
 var tasksCompletedEl = document.querySelector("#tasks-completed");
 var pageContentEl = document.querySelector("#page-content");
 var tasks = [];
+// this variable will go into local storage, if it exists it will return the value (array), 
+var tasksArray = JSON.parse(localStorage.getItem('tasks')) || []
 
 var taskFormHandler = function(event) {
   event.preventDefault();
@@ -253,15 +255,29 @@ var saveTasks = function() {
 //function g --> retrieve data from local storage
 var loadTasks = function() {
   localStorage.getItem(tasks);
-  console.log(loadTasks)
-
-  if (tasks === null) {
-    tasks.push(tasks[""])
-    return false; 
-  } 
-  tasks = JSON.parse(tasks);
+  
   console.log()
+
+  // if (tasks === null) {
+  //   tasks.push(tasks[""])
+  //   return false; 
+  // } 
+  // tasks = JSON.parse(tasks);
+  // console.log()
 }
+
+loadTasks()
+
+
+
+
+
+
+
+
+
+
+
 
 // for (i < taskButtonHandler.length )
 
@@ -295,3 +311,4 @@ var createTaskEl = function(taskDataObj) {
   saveTasks()
 };
 */
+
