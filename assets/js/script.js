@@ -254,9 +254,23 @@ var saveTasks = function() {
 
 //function g --> retrieve data from local storage
 var loadTasks = function() {
-  localStorage.getItem(tasks);
+  //transforming string values from local storage back to objects
+  var tasksArray = JSON.parse(localStorage.getItem('tasks')) || []
+  console.log(tasksArray)
+
   
-  console.log()
+  var tasksArray = document.createElement("li");
+  
+  tasksArray.className = "task-item";
+
+  tasksArray.setAttribute("data-task-id", taskIdCounter)
+
+  document.createElement("li")
+
+  for(var i = 0; i < tasksArray; i++) {
+    tasksArray.appendChild(taskInfoEl)
+  }
+  
 
   // if (tasks === null) {
   //   tasks.push(tasks[""])
@@ -266,23 +280,13 @@ var loadTasks = function() {
   // console.log()
 }
 
+
+
 loadTasks()
-
-
-
-
-
-
-
-
-
-
-
 
 // for (i < taskButtonHandler.length )
 
 //adding a new event listener
-
 
 /*
 var createTaskEl = function(taskDataObj) {
