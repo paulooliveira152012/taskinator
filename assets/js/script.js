@@ -64,9 +64,8 @@ var createTaskEl = function(taskDataObj) {
   // increase task counter for next unique id
   taskIdCounter++;
 
-  //testing new properties from taskDataObj
-  console.log(taskDataObj);
-  console.log(taskDataObj.status);
+  //calling SaveTasks function
+  saveTasks()
 };
 
 var createTaskActions = function(taskId) {
@@ -130,6 +129,9 @@ for (var i = 0; i < tasks.length; i++) {
   formEl.removeAttribute("data-task-id");
   // update formEl button to go back to saying "Add Task" instead of "Edit Task"
   formEl.querySelector("#save-task").textContent = "Add Task";
+
+  //calling SaveTasks function
+  saveTasks()
 };
 
 var taskButtonHandler = function(event) {
@@ -170,8 +172,9 @@ for (var i = 0; i < tasks.length; i++) {
   if (tasks[i].id === parseInt(taskId)) {
     tasks[i].status = statusValue;
   }
-  console.log(tasks);
 }
+//calling SaveTasks function
+saveTasks()
 };
 
 var editTask = function(taskId) {
@@ -214,7 +217,18 @@ for (var i = 0; i < tasks.length; i++) {
 
 // reassign tasks array to be the same as updatedTaskArr
 tasks = updatedTaskArr;
+//calling SaveTasks function
+saveTasks()
 };
+
+//function a --> saving tasks to localStorage
+var saveTasks = function() {
+  //converting the value in tasks to string so that it can be stored in local storage adding JSON.stringify before "(tasks)"
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+
+
 
 // Create a new task
 formEl.addEventListener("submit", taskFormHandler);
@@ -224,5 +238,3 @@ pageContentEl.addEventListener("click", taskButtonHandler);
 
 // for changing the status
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
-
-// starting with code snapshot 4.3 from here 
