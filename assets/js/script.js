@@ -221,11 +221,33 @@ tasks = updatedTaskArr;
 saveTasks()
 };
 
+
+
 //function a --> saving tasks to localStorage
 var saveTasks = function() {
   //converting the value in tasks to string so that it can be stored in local storage adding JSON.stringify before "(tasks)"
   localStorage.setItem("tasks", JSON.stringify(tasks));
-}
+};
+
+/* PSEUDOCODE FOR LAST STEP
+
+Specifically, we'll build a loadTasks() function that does the following:
+
+Gets task items from localStorage.
+
+Converts tasks from the string format back into an array of objects.
+
+Iterates through a tasks array and creates task elements on the page from it.
+ */
+var loadTasks = function() {
+  //retrieve data we saved in local storage and parse it back to objects
+  
+  //JSON.parse(localStorage.getItem("tasks"));
+  // localStorage.getItem('tasks');
+  // window.localStorage.getItem('tasks');
+  JSON.parse(window.localStorage.getItem('tasks'));
+  console.log()
+};
 
 
 
@@ -238,3 +260,5 @@ pageContentEl.addEventListener("click", taskButtonHandler);
 
 // for changing the status
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
+
+loadTasks()
